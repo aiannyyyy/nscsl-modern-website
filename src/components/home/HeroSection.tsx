@@ -51,10 +51,12 @@ export default function HeroSection() {
           {/* Left Content */}
           <div className="space-y-6">
             <div>
-              <h3 className={`text-3xl lg:text-4xl font-bold mb-2 ${
-                isDark ? 'text-white' : 'text-gray-800'
-              }`}>
-                <span className="text-[#063FA1]">Newborn Screening</span>
+              <h3
+                className={`text-3xl lg:text-4xl font-bold mb-2 ${
+                  isDark ? 'text-[#FFD700]' : 'text-[#063FA1]'
+                }`}
+              >
+                <span>Newborn Screening</span>
               </h3>
               <h3 className={`text-3xl lg:text-4xl font-bold ${
                 isDark ? 'text-white' : 'text-gray-800'

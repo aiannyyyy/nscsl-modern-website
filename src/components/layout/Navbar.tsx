@@ -93,7 +93,7 @@ export default function Navbar() {
                       location.pathname === link.path 
                         ? isDark
                           ? 'from-yellow-400 to-yellow-500 w-12'
-                          : 'from-[#063FA1] to-[#052d7a] w-12'
+                          : 'from-white to-white w-12'
                         : 'from-transparent to-transparent w-0 group-hover:w-12'
                     }`}
                   />

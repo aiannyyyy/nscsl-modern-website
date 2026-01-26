@@ -36,6 +36,7 @@ build/
 # Public data and images (large files)
 public/data/
 public/images/
+public/files/
 
 # OS files
 Thumbs.db
