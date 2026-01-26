@@ -139,7 +139,7 @@ export default function BlogSection() {
           onClick={() => setSelectedBlog(null)}
         >
           <div 
-            className={`rounded-xl max-w-4xl max-h-[90vh] overflow-y-auto transition-colors duration-300 ${
+            className={`rounded-xl max-w-2xl w-full transition-colors duration-300 flex flex-col ${
               isDark
                 ? 'bg-gray-800'
                 : 'bg-white'
@@ -151,7 +151,7 @@ export default function BlogSection() {
                 ? 'bg-gray-800 border-gray-700'
                 : 'bg-white border-gray-200'
             }`}>
-              <h5 className={`text-xl font-bold ${
+              <h5 className={`text-lg font-bold ${
                 isDark
                   ? 'text-white'
                   : 'text-gray-800'
@@ -169,33 +169,33 @@ export default function BlogSection() {
                 ×
               </button>
             </div>
-            <div className="p-6">
+            <div className="p-4 overflow-y-auto max-h-[calc(90vh-120px)]">
               {selectedBlog.isCarousel && selectedBlog.carouselImages ? (
                 <div className="relative mb-4">
                   <img 
                     src={selectedBlog.carouselImages[currentCarouselImage]}
                     alt={`Step ${currentCarouselImage + 1}`}
-                    className="w-full rounded-lg"
+                    className="w-full h-64 object-contain rounded-lg"
                   />
                   <button
                     onClick={prevCarouselImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                   >
-                    <i className="fas fa-chevron-left"></i>
+                    <i className="fas fa-chevron-left text-sm"></i>
                   </button>
                   <button
                     onClick={nextCarouselImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                   >
-                    <i className="fas fa-chevron-right"></i>
+                    <i className="fas fa-chevron-right text-sm"></i>
                   </button>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
                     {selectedBlog.carouselImages.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => setCurrentCarouselImage(index)}
-                        className={`h-2 rounded-full transition-all ${
-                          index === currentCarouselImage ? 'bg-white w-6' : 'bg-white/50'
+                        className={`h-1.5 rounded-full transition-all ${
+                          index === currentCarouselImage ? 'bg-white w-4' : 'bg-white/50'
                         }`}
                       />
                     ))}
@@ -205,10 +205,10 @@ export default function BlogSection() {
                 <img 
                   src={selectedBlog.image} 
                   alt={selectedBlog.title}
-                  className="w-full rounded-lg mb-4"
+                  className="w-full h-64 object-contain rounded-lg mb-4"
                 />
               )}
-              <p className={`leading-relaxed ${
+              <p className={`text-sm leading-relaxed ${
                 isDark
                   ? 'text-gray-300'
                   : 'text-gray-700'
