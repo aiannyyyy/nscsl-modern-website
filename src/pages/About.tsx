@@ -4,7 +4,7 @@ import ContactSection from '../components/home/ContactSection';
 export default function About() {
   return (
     <>
-      <div style={{ paddingTop: '40px' }}>
+      <div style={{ paddingTop: '30px' }}>
         <AboutTabs />
         <ContactSection />
       </div>

@@ -61,7 +61,7 @@ export default function Navbar() {
               <span className={`font-bold text-lg transition-all duration-300 group-hover:text-[#063FA1] ${
                 isDark ? 'text-white' : 'text-gray-900'
               }`}>
-                NSC<span className={`${isDark ? 'text-yellow-400' : 'text-[#063FA1]'}`}>SL</span>
+                Newborn <span className={`${isDark ? 'text-yellow-400' : 'text-[#063FA1]'}`}>Screening Center</span>
               </span>
               <span className={`text-xs font-semibold transition-all duration-300 ${
                 isDark ? 'text-gray-400 group-hover:text-yellow-400' : 'text-gray-600 group-hover:text-[#063FA1]'
@@ -71,8 +71,8 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Menu */}
-          <ul className="hidden lg:flex items-center gap-1">
+          {/* Desktop Menu - Centered */}
+          <ul className="hidden lg:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
             {navLinks.map((link) => (
               <li key={link.path}>
                 <Link 
