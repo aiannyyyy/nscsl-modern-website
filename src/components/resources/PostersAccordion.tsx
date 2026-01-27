@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import { ChevronDown, Image as ImageIcon, ExternalLink } from 'lucide-react'
-import { postersData } from '../../data/postersData'
+import { useState } from 'react';
+import { ChevronDown, Image as ImageIcon, ExternalLink } from 'lucide-react';
+import { postersData } from '../../data/postersData';
+import type { PosterFile } from '../../data/postersData'; // type-only import
 
 export default function PostersAccordion() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-colors duration-300">
@@ -44,13 +45,12 @@ export default function PostersAccordion() {
                 </span>
 
                 <div className="flex-1">
-                  {/* Multiple files (ex: English / Filipino) */}
-                  {poster.files ? (
+                  {poster.files && poster.files.length > 0 ? (
                     <div className="text-gray-700 dark:text-gray-300">
                       <span className="font-medium">{poster.title}</span>
                       <span className="mx-2 text-gray-400">│</span>
 
-                      {poster.files.map((file, idx) => (
+                      {poster.files.map((file: PosterFile, idx: number) => (
                         <span key={idx}>
                           <a
                             href={file.file}
@@ -61,23 +61,24 @@ export default function PostersAccordion() {
                             {file.label}
                           </a>
 
-                          {idx < poster.files.length - 1 && (
+                          {idx < (poster.files?.length ?? 0) - 1 && (
                             <span className="mx-2 text-gray-400">|</span>
                           )}
                         </span>
                       ))}
                     </div>
                   ) : (
-                    /* Single file */
-                    <a
-                      href={poster.file}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-700 dark:text-gray-300 hover:text-[#063FA1] dark:hover:text-yellow-400 transition-colors font-medium inline-flex items-center gap-2"
-                    >
-                      {poster.title}
-                      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </a>
+                    poster.file && (
+                      <a
+                        href={poster.file}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-700 dark:text-gray-300 hover:text-[#063FA1] dark:hover:text-yellow-400 transition-colors font-medium inline-flex items-center gap-2"
+                      >
+                        {poster.title}
+                        <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </a>
+                    )
                   )}
                 </div>
               </li>
@@ -86,5 +87,5 @@ export default function PostersAccordion() {
         </div>
       </div>
     </div>
-  )
+  );
 }

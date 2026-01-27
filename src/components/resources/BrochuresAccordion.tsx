@@ -45,29 +45,32 @@ export default function BrochuresAccordion() {
 
                 <div className="flex-1">
                   {/* Multiple language/files */}
-                  {brochure.files ? (
-                    <div className="text-gray-700 dark:text-gray-300">
-                      <span className="font-medium">{brochure.title}</span>
-                      <span className="mx-2 text-gray-400">│</span>
+                  {brochure.files ? (() => {
+                    const files = brochure.files; // TS now knows it's defined
+                    return (
+                      <div className="text-gray-700 dark:text-gray-300">
+                        <span className="font-medium">{brochure.title}</span>
+                        <span className="mx-2 text-gray-400">│</span>
 
-                      {brochure.files.map((file, idx) => (
-                        <span key={idx}>
-                          <a
-                            href={file.file}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#063FA1] dark:text-yellow-400 hover:underline font-medium"
-                          >
-                            {file.label}
-                          </a>
+                        {files.map((file, idx) => (
+                          <span key={idx}>
+                            <a
+                              href={file.file}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#063FA1] dark:text-yellow-400 hover:underline font-medium"
+                            >
+                              {file.label}
+                            </a>
 
-                          {idx < brochure.files.length - 1 && (
-                            <span className="mx-2 text-gray-400">|</span>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  ) : (
+                            {idx < files.length - 1 && (
+                              <span className="mx-2 text-gray-400">|</span>
+                            )}
+                          </span>
+                        ))}
+                      </div>
+                    );
+                  })() : (
                     /* Single file */
                     <a
                       href={brochure.file}

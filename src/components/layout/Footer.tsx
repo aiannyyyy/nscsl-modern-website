@@ -1,12 +1,8 @@
 import { useState } from 'react';
-import { Facebook, Linkedin, Mail, MapPin, Phone, ArrowUp } from 'lucide-react';
+import { Facebook, Linkedin, Mail, MapPin, Phone} from 'lucide-react';
 
 export default function Footer() {
   const [showExtraEmails, setShowExtraEmails] = useState(false);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <>

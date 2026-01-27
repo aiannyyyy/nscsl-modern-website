@@ -1,31 +1,28 @@
 import { useState } from 'react';
-import { X, BookMarked, Download, Users, Globe } from 'lucide-react';
+import { X, BookMarked, Download } from 'lucide-react';
 import { brochuresData } from '../../data/brochuresData';
+import type { BrochureFile } from '../../data/brochuresData';
+
 
 interface BrochuresModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type AudienceTab = 'doctors' | 'parentsEnglish' | 'parentsFilipino';
-
 export default function BrochuresModal({ isOpen, onClose }: BrochuresModalProps) {
   const [selectedCategory, setSelectedCategory] = useState(brochuresData[0]?.id || '');
-  const [selectedAudience, setSelectedAudience] = useState<AudienceTab>('doctors');
   const [searchQuery, setSearchQuery] = useState('');
 
   const currentCategory = brochuresData.find(cat => cat.id === selectedCategory);
-  const currentItems = currentCategory?.categories[selectedAudience] || [];
+
+  // Normalize files: either multiple files or single file
+  const currentItems: BrochureFile[] = currentCategory
+    ? currentCategory.files || (currentCategory.file ? [{ label: currentCategory.title, file: currentCategory.file }] : [])
+    : [];
 
   const filteredItems = currentItems.filter(item =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+    item.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  const audienceTabs = [
-    { key: 'doctors' as AudienceTab, label: 'For Doctors', icon: Users },
-    { key: 'parentsEnglish' as AudienceTab, label: 'For Parents (English)', icon: Globe },
-    { key: 'parentsFilipino' as AudienceTab, label: 'For Parents (Filipino)', icon: Globe }
-  ];
 
   if (!isOpen) return null;
 
@@ -74,63 +71,21 @@ export default function BrochuresModal({ isOpen, onClose }: BrochuresModalProps)
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
-                  {category.name}
+                  {category.title}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Audience Tabs */}
-          <div className="sticky top-[158px] bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2.5 z-10">
-            <div className="flex gap-2 overflow-x-auto">
-              {audienceTabs.map((tab) => {
-                const Icon = tab.icon;
-                const count = currentCategory?.categories[tab.key]?.length || 0;
-                
-                return (
-                  <button
-                    key={tab.key}
-                    onClick={() => setSelectedAudience(tab.key)}
-                    disabled={count === 0}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
-                      selectedAudience === tab.key
-                        ? 'bg-[#063FA1] dark:bg-yellow-500 text-white dark:text-gray-900'
-                        : count === 0
-                        ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    {tab.label}
-                    <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded-full">
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Content */}
           <div className="p-4">
-            {currentCategory && (
-              <div className="mb-3">
-                <h3 className="text-lg font-bold text-gray-800 dark:text-white">
-                  {currentCategory.name}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {currentCategory.description}
-                </p>
-              </div>
-            )}
-
             {filteredItems.length === 0 ? (
               <div className="text-center py-8">
                 <BookMarked className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
                 <p className="text-gray-500 dark:text-gray-400 text-sm">
                   {searchQuery 
                     ? 'No brochures found matching your search.' 
-                    : 'No brochures available for this audience.'}
+                    : 'No brochures available.'}
                 </p>
               </div>
             ) : (
@@ -145,7 +100,7 @@ export default function BrochuresModal({ isOpen, onClose }: BrochuresModalProps)
                     </span>
                     <div className="flex-1 min-w-0">
                       <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">
-                        {item.title}
+                        {item.label}
                       </p>
                     </div>
                     <a 
@@ -163,7 +118,7 @@ export default function BrochuresModal({ isOpen, onClose }: BrochuresModalProps)
             )}
 
             <div className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-              Showing {filteredItems.length} brochure{filteredItems.length !== 1 ? 's' : ''} in {currentCategory?.name}
+              Showing {filteredItems.length} brochure{filteredItems.length !== 1 ? 's' : ''}
             </div>
           </div>
         </div>
