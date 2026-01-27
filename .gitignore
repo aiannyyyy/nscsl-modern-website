@@ -29,6 +29,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Data Files
+src/data/
+
 # Build files
 build/
 .cache/

@@ -13,21 +13,17 @@ export interface Poster {
 export const postersData: Poster[] = [
   {
     id: '1',
-    title: 'Expanded Newborn Screening Poster',
-    files: [
-      { label: 'English', file: '/files/posters/ENBS-Poster-English.pdf' },
-      { label: 'Filipino', file: '/files/posters/ENBS-Poster-Filipino.pdf' }
-    ]
+    title: 'Gabay',
+    file: '/files/gabay.pdf'
   },
   {
     id: '2',
-    title: 'Sample Poster 1',
-    file: '/files/posters/sample-poster-1.pdf'
+    title: 'Are Your Newborn Screenening Samples Acceptable?',
+    file: '/images/poster1.png'
   },
   {
     id: '3',
-    title: 'Sample Poster 2',
-    file: '/files/posters/sample-poster-2.pdf'
+    title: 'Collection Procedure',
+    file: '/images/poster2.JPG'
   }
-  // Add more posters as needed
 ];

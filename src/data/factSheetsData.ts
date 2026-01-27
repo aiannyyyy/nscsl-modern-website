@@ -21,10 +21,17 @@ export const factSheetsData: FactSheetCategory[] = [
     description: 'Information about amino acid metabolism disorders',
     categories: {
       doctors: [
-        // Add your amino acid disorder files here
+        { title: 'HCY (Homocystinuria/Hypermethioninemia)', file: '/files/fact-sheets/NSRC-INT-027Rev0-Hcy.pdf' },
+        { title: 'MAT (Methionine Adenosine Transferase Deficiency)', file: '/files/fact-sheets/NSRC-INT-028Rev0-MAT-Deficiency.pdf' }
       ],
-      parentsEnglish: [],
-      parentsFilipino: []
+      parentsEnglish: [
+        { title: 'HCY (Homocystinuria/Hypermethioninemia)', file: '/files/fact-sheets/NSRC-PSU-FS-04_Rev0_Hcy.pdf' },
+        { title: 'MAT (Methionine Adenosine Transferase Deficiency)', file: '/files/fact-sheets/NSRC-PSU-FS-01-English-Fact-Sheet-on-MAT-Rev0-Controlled-Copy.pdf' }
+      ],
+      parentsFilipino: [
+        { title: 'HCY (Homocystinuria/Hypermethioninemia)', file: '/files/fact-sheets/NSRC-PSU-FS-33_Rev0_Fil-HCY.pdf' },
+        { title: 'MAT (Methionine Adenosine Transferase Deficiency)', file: '/files/fact-sheets/NSRC-PSU-FS-01-English-Fact-Sheet-on-MAT-Rev0-Controlled-Copy.pdf' }
+      ]
     }
   },
   {
