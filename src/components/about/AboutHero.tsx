@@ -1,6 +1,6 @@
-import { Megaphone, Bell, Info } from 'lucide-react';
+import { Users, Target, Award } from 'lucide-react';
 
-export default function AnnouncementsHero() {
+export default function AboutHero() {
   return (
     <section className="relative bg-gradient-to-br from-[#063FA1] to-[#052d7a] dark:from-gray-900 dark:to-gray-800 text-white py-24 overflow-hidden transition-colors duration-300" style={{ marginTop: '0px' }}>
       {/* Decorative Background Elements */}
@@ -15,40 +15,40 @@ export default function AnnouncementsHero() {
           {/* Icon Display */}
           <div className="flex justify-center gap-6 mb-8">
             <div className="bg-white/10 dark:bg-yellow-500/20 backdrop-blur-sm p-4 rounded-full animate-bounce">
-              <Megaphone className="w-8 h-8 text-white dark:text-yellow-400" />
+              <Users className="w-8 h-8 text-white dark:text-yellow-400" />
             </div>
             <div className="bg-white/10 dark:bg-yellow-500/20 backdrop-blur-sm p-4 rounded-full animate-bounce delay-100">
-              <Bell className="w-8 h-8 text-white dark:text-yellow-400" />
+              <Target className="w-8 h-8 text-white dark:text-yellow-400" />
             </div>
             <div className="bg-white/10 dark:bg-yellow-500/20 backdrop-blur-sm p-4 rounded-full animate-bounce delay-200">
-              <Info className="w-8 h-8 text-white dark:text-yellow-400" />
+              <Award className="w-8 h-8 text-white dark:text-yellow-400" />
             </div>
           </div>
 
           {/* Title */}
           <h1 className="text-4xl lg:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200 dark:from-yellow-400 dark:to-yellow-200">
-            Announcements
+            About Us
           </h1>
 
           {/* Description */}
           <p className="text-xl text-white/90 dark:text-gray-300 max-w-2xl mx-auto">
-            Stay updated with the latest news and important information from Newborn Screening Center Southern Luzon
+            Dedicated to improving newborn health through comprehensive screening and community support in Southern Luzon
           </p>
         </div>
 
         {/* Stats or Quick Info */}
         <div className="flex flex-wrap justify-center gap-6 mt-12">
           <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm px-6 py-4 rounded-xl border border-white/20 dark:border-yellow-400/30 hover:scale-105 transition-transform">
-            <div className="text-3xl font-bold text-white dark:text-yellow-400">Latest</div>
-            <div className="text-sm text-white/80 dark:text-gray-300">Updates</div>
+            <div className="text-3xl font-bold text-white dark:text-yellow-400">Our</div>
+            <div className="text-sm text-white/80 dark:text-gray-300">Mission</div>
           </div>
           <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm px-6 py-4 rounded-xl border border-white/20 dark:border-yellow-400/30 hover:scale-105 transition-transform">
-            <div className="text-3xl font-bold text-white dark:text-yellow-400">Important</div>
-            <div className="text-sm text-white/80 dark:text-gray-300">Information</div>
+            <div className="text-3xl font-bold text-white dark:text-yellow-400">Our</div>
+            <div className="text-sm text-white/80 dark:text-gray-300">Vision</div>
           </div>
           <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm px-6 py-4 rounded-xl border border-white/20 dark:border-yellow-400/30 hover:scale-105 transition-transform">
-            <div className="text-3xl font-bold text-white dark:text-yellow-400">Stay</div>
-            <div className="text-sm text-white/80 dark:text-gray-300">Informed</div>
+            <div className="text-3xl font-bold text-white dark:text-yellow-400">Our</div>
+            <div className="text-sm text-white/80 dark:text-gray-300">Values</div>
           </div>
         </div>
       </div>
