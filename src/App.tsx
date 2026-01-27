@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Events from './pages/Events';
 import Resources from './pages/Resources';
+import Announcements from './pages/Announcements';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/events" element={<Events />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/announcements" element={<Announcements />} />
             {/* We'll add other routes later */}
           </Routes>
         </Layout>
