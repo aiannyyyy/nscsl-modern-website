@@ -127,15 +127,6 @@ export default function Footer() {
       <div className="bg-white dark:bg-gray-800 text-[#063FA1] dark:text-yellow-400 text-center py-3 font-bold transition-colors duration-300">
         © 2024 Newborn Screening Southern Luzon. All rights reserved.
       </div>
-
-      {/* Scroll to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-6 right-6 bg-[#F27D0C] hover:bg-[#d66b0a] text-white p-3 rounded-full shadow-lg transition-all hover:scale-110 z-50 group"
-        aria-label="Scroll to top"
-      >
-        <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform duration-300" />
-      </button>
     </>
   );
 }
