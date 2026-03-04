@@ -98,17 +98,18 @@ export default function StoriesSection() {
 
       {/* Modal */}
       {selectedStory && (
-        <div 
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+        <div
+          className="fixed inset-0 bg-black/70 z-[9999] flex items-center justify-center px-4 pt-20 pb-6"
           onClick={() => setSelectedStory(null)}
         >
-          <div 
-            className={`rounded-xl max-w-4xl max-h-[90vh] overflow-y-auto transition-colors duration-300 ${
+          <div
+            className={`rounded-xl w-full max-w-4xl max-h-full flex flex-col overflow-hidden shadow-2xl transition-colors duration-300 ${
               isDark ? 'bg-gray-800' : 'bg-white'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={`sticky top-0 border-b p-4 flex justify-between items-center transition-colors duration-300 ${
+            {/* Header */}
+            <div className={`flex-shrink-0 border-b p-4 flex justify-between items-center transition-colors duration-300 ${
               isDark
                 ? 'bg-gray-800 border-gray-700'
                 : 'bg-white border-gray-200'
@@ -129,12 +130,14 @@ export default function StoriesSection() {
                 ×
               </button>
             </div>
-            <div className="p-6">
+
+            {/* Scrollable content */}
+            <div className="overflow-y-auto flex-1 p-6">
               {selectedStory.isVideo && selectedStory.videoSrc ? (
-                <video 
-                  className="w-full rounded-lg mb-4" 
-                  autoPlay 
-                  loop 
+                <video
+                  className="w-full rounded-lg mb-4"
+                  autoPlay
+                  loop
                   muted
                   controls
                 >
@@ -142,8 +145,8 @@ export default function StoriesSection() {
                   Your browser does not support the video tag.
                 </video>
               ) : (
-                <img 
-                  src={selectedStory.image} 
+                <img
+                  src={selectedStory.image}
                   alt={selectedStory.title}
                   className="w-full rounded-lg mb-4"
                 />

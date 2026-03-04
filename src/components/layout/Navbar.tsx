@@ -28,14 +28,14 @@ export default function Navbar() {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-colors duration-300 py-3 ${
         scrolled 
           ? isDark
-            ? 'bg-gray-800/95 backdrop-blur-md shadow-2xl py-2'
-            : 'bg-gradient-to-r from-blue-50 to-indigo-50 backdrop-blur-md shadow-2xl py-2'
+            ? 'bg-gray-800/95 backdrop-blur-md shadow-2xl'
+            : 'bg-gradient-to-r from-blue-50 to-indigo-50 backdrop-blur-md shadow-2xl'
           : isDark
-            ? 'bg-gray-800/80 backdrop-blur-md py-4'
-            : 'bg-gradient-to-r from-blue-50 to-indigo-50 backdrop-blur-md py-4'
+            ? 'bg-gray-800/80 backdrop-blur-md'
+            : 'bg-gradient-to-r from-blue-50 to-indigo-50 backdrop-blur-md'
       }`}
     >
       <div className="container mx-auto px-4">

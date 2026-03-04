@@ -47,8 +47,8 @@ export default function ContactHero() {
             <div className="text-sm text-white/80 dark:text-gray-300">Here to Help</div>
           </div>
           <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm px-6 py-4 rounded-xl border border-white/20 dark:border-yellow-400/30 hover:scale-105 transition-transform">
-            <div className="text-3xl font-bold text-white dark:text-yellow-400">24/7</div>
-            <div className="text-sm text-white/80 dark:text-gray-300">Support</div>
+            <div className="text-3xl font-bold text-white dark:text-yellow-400">Mon - Fri</div>
+            <div className="text-sm text-white/80 dark:text-gray-300 text-center">Support</div>
           </div>
         </div>
       </div>
