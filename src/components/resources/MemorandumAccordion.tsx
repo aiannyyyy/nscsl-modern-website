@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ChevronDown, FileText, ExternalLink } from 'lucide-react';
-import { getRecentMemos } from '../../data/memorandumsData';
+import { memorandumsData } from '../../data/memorandumsData';
 
 interface MemorandumAccordionProps {
   onViewAll: () => void;
@@ -8,7 +8,8 @@ interface MemorandumAccordionProps {
 
 export default function MemorandumAccordion({ onViewAll }: MemorandumAccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const recentMemos = getRecentMemos(5);
+
+  const recentMemos = useMemo(() => memorandumsData.slice(0, 5), []);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-colors duration-300">
@@ -47,7 +48,12 @@ export default function MemorandumAccordion({ onViewAll }: MemorandumAccordionPr
                 <span className="inline-block bg-[#063FA1] dark:bg-yellow-500 text-white dark:text-gray-900 px-2 py-1 rounded text-xs font-semibold mb-2">
                   {memo.memoId}
                 </span>
-                <a href={memo.file} target="_blank" rel="noopener noreferrer" className="block text-gray-700 dark:text-gray-300 hover:text-[#063FA1] dark:hover:text-yellow-400 transition-colors group-hover:translate-x-1 duration-200">
+                <a
+                  href={memo.file}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-gray-700 dark:text-gray-300 hover:text-[#063FA1] dark:hover:text-yellow-400 transition-colors group-hover:translate-x-1 duration-200"
+                >
                   {memo.title}
                 </a>
               </div>

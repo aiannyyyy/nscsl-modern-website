@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { X, FileText, Download, ChevronLeft, ChevronRight } from 'lucide-react';
-import { getYears, getMemosByYear } from '../../data/memorandumsData';
+import { memorandumsData } from '../../data/memorandumsData';
 
 interface MemorandumModalProps {
   isOpen: boolean;
@@ -8,14 +8,25 @@ interface MemorandumModalProps {
 }
 
 export default function MemorandumModal({ isOpen, onClose }: MemorandumModalProps) {
-  const years = getYears();
-  const [selectedYear, setSelectedYear] = useState(years[0]);
+  const years = useMemo(() => {
+    const y = [...new Set(memorandumsData.map(m => m.year))];
+    return y.sort((a, b) => b - a);
+  }, []);
+
+  const [selectedYear, setSelectedYear] = useState<number>(years[0]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const memos = getMemosByYear(selectedYear);
-  const filteredMemos = memos.filter(memo =>
-    memo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    memo.memoId.toLowerCase().includes(searchQuery.toLowerCase())
+  const memos = useMemo(() =>
+    memorandumsData.filter(m => m.year === selectedYear),
+    [selectedYear]
+  );
+
+  const filteredMemos = useMemo(() =>
+    memos.filter(memo =>
+      memo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      memo.memoId.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+    [memos, searchQuery]
   );
 
   const currentYearIndex = years.indexOf(selectedYear);
