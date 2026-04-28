@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 
-interface Blog {
+interface Blog{
   id: number;
   title: string;
   description: string;

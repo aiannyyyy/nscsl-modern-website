@@ -30,13 +30,17 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 z-50 overflow-y-auto" onClick={onClose}>
-      <div className="min-h-screen px-4 py-6">
+    // Overlay: pt-16 pushes content below the navbar (adjust if your navbar height differs)
+    <div
+      className="fixed inset-0 bg-black/70 z-50 overflow-y-auto pt-16"
+      onClick={onClose}
+    >
+      <div className="min-h-[calc(100vh-4rem)] px-4 py-6">
         <div
           className="bg-white dark:bg-gray-800 rounded-xl max-w-4xl mx-auto shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
+          {/* Header — sticky just below the navbar */}
           <div className="sticky top-0 bg-gradient-to-r from-[#063FA1] to-[#052d7a] dark:from-gray-900 dark:to-gray-800 text-white p-4 rounded-t-xl z-10">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -46,6 +50,7 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
               <button
                 onClick={onClose}
                 className="hover:bg-white/10 p-1.5 rounded-full transition-colors"
+                aria-label="Close"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -86,7 +91,7 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
               {audienceTabs.map((tab) => {
                 const Icon = tab.icon;
                 const count = currentCategory?.categories[tab.key]?.length || 0;
-                
+
                 return (
                   <button
                     key={tab.key}
@@ -128,8 +133,8 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
               <div className="text-center py-8">
                 <BookOpen className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
                 <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  {searchQuery 
-                    ? 'No fact sheets found matching your search.' 
+                  {searchQuery
+                    ? 'No fact sheets found matching your search.'
                     : 'No fact sheets available for this audience.'}
                 </p>
               </div>
@@ -148,10 +153,10 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
                         {item.title}
                       </p>
                     </div>
-                    <a 
-                      href={item.file} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href={item.file}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-1.5 bg-[#063FA1] dark:bg-yellow-500 hover:bg-[#052d7a] dark:hover:bg-yellow-600 text-white dark:text-gray-900 px-3 py-1.5 rounded-lg transition-all hover:scale-105 opacity-0 group-hover:opacity-100"
                     >
                       <Download className="w-3.5 h-3.5" />

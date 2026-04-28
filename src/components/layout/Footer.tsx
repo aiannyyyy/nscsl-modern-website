@@ -120,7 +120,8 @@ export default function Footer() {
       </footer>
 
       {/* Copyright */}
-      <div className="bg-white dark:bg-gray-800 text-[#063FA1] dark:text-yellow-400 text-center py-3 font-bold transition-colors duration-300">
+      <div className="bg-white dark:bg-gray-800 text-[#063FA1] dark
+      :text-yellow-400 text-center py-3 font-bold transition-colors duration-300">
         © 2024 Newborn Screening Southern Luzon. All rights reserved.
       </div>
     </>

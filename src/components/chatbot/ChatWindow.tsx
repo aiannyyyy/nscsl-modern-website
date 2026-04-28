@@ -48,7 +48,7 @@ export default function ChatWindow({
           <Bot className="w-6 h-6" />
         </div>
         <div className="flex-1">
-          <h3 className="font-bold text-lg">NSC Assistant</h3>
+          <h3 className="font-bold text-lg">NSCSL Assistant</h3>
           <p className="text-xs text-white/80">Ask me about newborn screening</p>
         </div>
       </div>

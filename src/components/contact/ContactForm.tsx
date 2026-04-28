@@ -1,12 +1,45 @@
 import { useState } from 'react';
 
+const DEPARTMENTS = [
+  {
+    label: 'Program Concern',
+    emails: ['pdo1@nscsl.com.ph', 'pdo2@nscsl.com.ph', 'pdo3@nscsl.com.ph', 'pdolopez@nscsl.com.ph', 'adminlopez@nscsl.com.ph'],
+  },
+  {
+    label: 'Accounting & Collections Concern',
+    emails: ['accounting1@nscsl.com.ph', 'accounting2@nscsl.com.ph', 'collections@nscsl.com.ph'],
+  },
+  {
+    label: 'Purchase Order Concern',
+    emails: ['supply@nscsl.com.ph', 'purchasing@nscsl.com.ph'],
+  },
+  {
+    label: 'Laboratory Concern',
+    emails: ['unsat@nscsl.com.ph'],
+  },
+  {
+    label: 'Follow-Up Concern',
+    emails: [
+      'followuphead@nscsl.com.ph',
+      'followup1@nscsl.com.ph',
+      'followup2@nscsl.com.ph',
+      'followup3@nscsl.com.ph',
+      'followup4@nscsl.com.ph',
+      'followupg6pd@nscsl.com.ph',
+    ],
+  },
+];
+
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
+  const [selectedDeptIndex, setSelectedDeptIndex] = useState<string>('');
+  const selectedDept = selectedDeptIndex !== '' ? DEPARTMENTS[Number(selectedDeptIndex)] : null;
+
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 0, num2: 0, answer: 0 });
   const [captchaInput, setCaptchaInput] = useState('');
@@ -27,10 +60,11 @@ export default function ContactForm() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleDeptChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDeptIndex(e.target.value);
   };
 
   const closeModal = () => {
@@ -41,13 +75,18 @@ export default function ContactForm() {
 
   const verifyAndSend = () => {
     if (parseInt(captchaInput) === captchaQuestion.answer) {
-      // Send email logic here
-      const mailtoLink = `mailto:admin@nscsl.com.ph?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-      )}`;
-      window.location.href = mailtoLink;
+      const to = selectedDept ? selectedDept.emails.join(',') : 'admin@nscsl.com.ph';
+      const gmailUrl =
+        `https://mail.google.com/mail/?view=cm` +
+        `&to=${encodeURIComponent(to)}` +
+        `&su=${encodeURIComponent(formData.subject)}` +
+        `&body=${encodeURIComponent(
+          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        )}`;
+      window.open(gmailUrl, '_blank', 'noopener,noreferrer');
       closeModal();
       setFormData({ name: '', email: '', subject: '', message: '' });
+      setSelectedDeptIndex('');
     } else {
       setCaptchaError(true);
     }
@@ -59,12 +98,52 @@ export default function ContactForm() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h6 className="text-[#063FA1] dark:text-yellow-400 font-semibold mb-2">Contact Us</h6>
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white">You may reach us with any questions.</h3>
+            <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
+              You may reach us with any questions.
+            </h3>
           </div>
 
           <div className="max-w-2xl mx-auto">
             <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8">
               <div className="grid grid-cols-1 gap-6 mb-6">
+
+                {/* Department Dropdown */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                    Select a Section / Concern <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={selectedDeptIndex}
+                    onChange={handleDeptChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#063FA1] dark:focus:ring-yellow-400 focus:border-transparent dark:bg-gray-800 dark:text-white bg-white"
+                  >
+                    <option value="" disabled>-- Choose a concern --</option>
+                    {DEPARTMENTS.map((dept, i) => (
+                      <option key={i} value={String(i)}>{dept.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Auto-filled Recipients */}
+                {selectedDept && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                      Recipients
+                    </label>
+                    <div className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 flex flex-wrap gap-2">
+                      {selectedDept.emails.map(email => (
+                        <span
+                          key={email}
+                          className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-[#063FA1] dark:bg-yellow-900 dark:text-yellow-300"
+                        >
+                          {email}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <input
                   type="text"
                   name="name"
@@ -80,7 +159,7 @@ export default function ContactForm() {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#063FA1] dark:focus:ring-yellow-400 focus:border-transparent dark:bg-gray-800 dark:text-white"
-                  placeholder="Email"
+                  placeholder="Your Email"
                   required
                 />
                 <input
@@ -93,6 +172,7 @@ export default function ContactForm() {
                   required
                 />
               </div>
+
               <div className="mb-6">
                 <textarea
                   name="message"
@@ -104,6 +184,7 @@ export default function ContactForm() {
                   required
                 />
               </div>
+
               <div className="text-center">
                 <button
                   type="submit"
@@ -125,6 +206,12 @@ export default function ContactForm() {
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">🤖 Security Verification</h3>
               <p className="text-gray-600 dark:text-gray-400">Please solve this simple math problem to continue</p>
             </div>
+
+            {selectedDept && (
+              <div className="mb-4 p-3 bg-blue-50 dark:bg-gray-800 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                <span className="font-semibold">Sending to:</span> {selectedDept.label}
+              </div>
+            )}
 
             <div className="mb-6">
               <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg text-center mb-4">
