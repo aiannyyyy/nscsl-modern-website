@@ -16,6 +16,8 @@ interface ChatWindowProps {
   inputMessage: string;
   isTyping: boolean;
   quickQuestions: string[];
+  language: 'en' | 'tl' | null;
+  onLanguageChange: (lang: 'en' | 'tl') => void;
   onInputChange: (value: string) => void;
   onSendMessage: () => void;
   onQuickQuestion: (question: string) => void;
@@ -26,6 +28,8 @@ export default function ChatWindow({
   inputMessage,
   isTyping,
   quickQuestions,
+  language,
+  onLanguageChange,
   onInputChange,
   onSendMessage,
   onQuickQuestion
@@ -42,6 +46,7 @@ export default function ChatWindow({
 
   return (
     <div className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-8rem)] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl flex flex-col z-50 border border-gray-200 dark:border-gray-700">
+
       {/* Header */}
       <div className="bg-gradient-to-r from-[#063FA1] to-[#052d7a] dark:from-yellow-600 dark:to-yellow-500 text-white p-4 rounded-t-2xl flex items-center gap-3">
         <div className="bg-white/20 p-2 rounded-full">
@@ -53,40 +58,72 @@ export default function ChatWindow({
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
-        {isTyping && (
-          <div className="flex gap-3 justify-start">
-            <div className="bg-[#063FA1] dark:bg-yellow-600 text-white p-2 rounded-full h-8 w-8 flex items-center justify-center">
-              <Bot className="w-4 h-4" />
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-3">
-              <div className="flex gap-1">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
-              </div>
-            </div>
+      {/* Language not yet selected */}
+      {!language ? (
+        <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8">
+          <div className="text-center">
+            <p className="text-gray-700 dark:text-gray-200 font-semibold text-base">
+              Please select your language
+            </p>
+            <p className="text-gray-400 dark:text-gray-500 text-sm mt-1">
+              Piliin ang inyong wika
+            </p>
           </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
 
-      {/* Quick Questions */}
-      {messages.length <= 2 && (
-        <QuickQuestions questions={quickQuestions} onQuestionClick={onQuickQuestion} />
+          <div className="flex gap-3">
+            <button
+              onClick={() => onLanguageChange('en')}
+              className="flex items-center gap-2 px-5 py-3 rounded-full bg-[#063FA1] dark:bg-yellow-600 text-white font-semibold text-sm shadow hover:bg-[#052d7a] dark:hover:bg-yellow-500 transition-all hover:scale-105"
+            >
+              🇺🇸 English
+            </button>
+            <button
+              onClick={() => onLanguageChange('tl')}
+              className="flex items-center gap-2 px-5 py-3 rounded-full bg-[#063FA1] dark:bg-yellow-600 text-white font-semibold text-sm shadow hover:bg-[#052d7a] dark:hover:bg-yellow-500 transition-all hover:scale-105"
+            >
+              🇵🇭 Filipino
+            </button>
+          </div>
+        </div>
+
+      ) : (
+        <>
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((message) => (
+              <ChatMessage key={message.id} message={message} />
+            ))}
+            {isTyping && (
+              <div className="flex gap-3 justify-start">
+                <div className="bg-[#063FA1] dark:bg-yellow-600 text-white p-2 rounded-full h-8 w-8 flex items-center justify-center">
+                  <Bot className="w-4 h-4" />
+                </div>
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-3">
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Quick Questions — only at the very start (just the greeting) */}
+          {messages.length <= 1 && (
+            <QuickQuestions questions={quickQuestions} onQuestionClick={onQuickQuestion} />
+          )}
+
+          {/* Input */}
+          <ChatInput
+            value={inputMessage}
+            onChange={onInputChange}
+            onSend={onSendMessage}
+            disabled={isTyping}
+          />
+        </>
       )}
-
-      {/* Input */}
-      <ChatInput
-        value={inputMessage}
-        onChange={onInputChange}
-        onSend={onSendMessage}
-        disabled={isTyping}
-      />
     </div>
   );
 }
