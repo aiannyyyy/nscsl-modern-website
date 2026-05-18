@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ChatButton from './ChatButton';
 import ChatWindow from './ChatWindow';
 import { quickQuestionsEN, quickQuestionsTL } from './chatResponses';
@@ -20,14 +20,37 @@ type Language = 'en' | 'tl';
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
+const SESSION_MESSAGES_KEY = 'nscsl_chat_messages';
+const SESSION_LANGUAGE_KEY = 'nscsl_chat_language';
+
+// Load from sessionStorage
+const loadMessages = (): Message[] => {
+  try {
+    const raw = sessionStorage.getItem(SESSION_MESSAGES_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    // Restore Date objects
+    return parsed.map((m: Message) => ({ ...m, timestamp: new Date(m.timestamp) }));
+  } catch {
+    return [];
+  }
+};
+
+const loadLanguage = (): Language | null => {
+  try {
+    const raw = sessionStorage.getItem(SESSION_LANGUAGE_KEY);
+    return (raw as Language) || null;
+  } catch {
+    return null;
+  }
+};
+
 // Build context string from data files
 const buildSiteContext = () => {
-  // --- ANNOUNCEMENTS ---
   const announcements = announcementsData
     .map(a => `- ${a.title} (${a.description})`)
     .join('\n');
 
-  // --- BROCHURES ---
   const brochures = brochuresData
     .map(b => {
       if (b.files) {
@@ -38,7 +61,6 @@ const buildSiteContext = () => {
     })
     .join('\n');
 
-  // --- ACTIVE EVENTS (only active ones) ---
   const activeEvents = eventsData.filter(e => e.active);
   const events =
     activeEvents.length > 0
@@ -58,7 +80,6 @@ const buildSiteContext = () => {
           .join('\n')
       : 'No active events at this time.';
 
-  // --- FACT SHEETS (category names only — avoid overwhelming the prompt) ---
   const factSheets = factSheetsData
     .map(cat => {
       const allTitles = [
@@ -67,19 +88,17 @@ const buildSiteContext = () => {
         ...cat.categories.parentsFilipino,
       ]
         .map(i => i.title)
-        .filter((v, i, a) => a.indexOf(v) === i) // dedupe
+        .filter((v, i, a) => a.indexOf(v) === i)
         .join(', ');
       return `- ${cat.name}: ${allTitles}`;
     })
     .join('\n');
 
-  // --- MEMORANDUMS (recent 2024–2026 only) ---
   const recentMemos = memorandumsData
     .filter(m => m.year >= 2024)
     .map(m => `- [${m.memoId}] ${m.title} (${m.year})`)
     .join('\n');
 
-  // --- POSTERS ---
   const posters = postersData.map(p => `- ${p.title}`).join('\n');
 
   return { announcements, brochures, events, factSheets, recentMemos, posters };
@@ -164,28 +183,35 @@ const getGreeting = (lang: Language) =>
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState<Language | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [language, setLanguage] = useState<Language | null>(loadLanguage);
+  const [messages, setMessages] = useState<Message[]>(loadMessages);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
+  // Save messages to sessionStorage whenever they change
+  useEffect(() => {
+    sessionStorage.setItem(SESSION_MESSAGES_KEY, JSON.stringify(messages));
+  }, [messages]);
+
+  // Save language to sessionStorage whenever it changes
+  useEffect(() => {
+    if (language) {
+      sessionStorage.setItem(SESSION_LANGUAGE_KEY, language);
+    } else {
+      sessionStorage.removeItem(SESSION_LANGUAGE_KEY);
+    }
+  }, [language]);
+
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
-    setMessages([
-      { id: 1, text: getGreeting(lang), sender: 'bot', timestamp: new Date() },
-    ]);
+    const greeting = { id: 1, text: getGreeting(lang), sender: 'bot' as const, timestamp: new Date() };
+    setMessages([greeting]);
     setInputMessage('');
   };
 
+  // Only toggle open/close — do NOT reset conversation
   const handleToggleOpen = () => {
-    if (isOpen) {
-      setIsOpen(false);
-      setLanguage(null);
-      setMessages([]);
-      setInputMessage('');
-    } else {
-      setIsOpen(true);
-    }
+    setIsOpen(prev => !prev);
   };
 
   const handleSendMessage = async () => {

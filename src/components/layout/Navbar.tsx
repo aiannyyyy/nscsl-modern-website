@@ -89,12 +89,14 @@ export default function Navbar() {
                 >
                   {link.label}
                   <span 
-                    className={`absolute bottom-1 left-4 h-0.5 bg-gradient-to-r transition-all duration-300 ${
+                    className={`absolute bottom-1 left-4 h-0.5 transition-all duration-300 ${
                       location.pathname === link.path 
                         ? isDark
-                          ? 'from-yellow-400 to-yellow-500 w-12'
-                          : 'from-white to-white w-12'
-                        : 'from-transparent to-transparent w-0 group-hover:w-12'
+                          ? 'bg-yellow-400 w-[calc(100%-2rem)]'
+                          : 'bg-white w-[calc(100%-2rem)]'
+                        : isDark
+                          ? 'bg-yellow-400 w-0 group-hover:w-[calc(100%-2rem)]'
+                          : 'bg-[#063FA1] w-0 group-hover:w-[calc(100%-2rem)]'
                     }`}
                   />
                 </Link>
