@@ -4,6 +4,7 @@ interface EventSchedule {
   date: string;
   time: string;
   venue: string;
+  speaker: string;
   city: string;
   province: string;
 }

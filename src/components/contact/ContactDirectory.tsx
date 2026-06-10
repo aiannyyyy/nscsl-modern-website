@@ -299,8 +299,8 @@ const departments = [
     ),
   },
   {
-    title: 'TESTING CONCERN',
-    emails: ['it-mis@nscsl.com.ph', 'it-mis2@nscsl.com.ph'],
+    title: 'PURCHASING CONCERN',
+    emails: ['purchasing@nscsl.com.ph', 'supply@nscsl.com.ph'],
     content: (
       <div>
         <h4 className="font-bold text-lg text-gray-900 dark:text-white mb-4">TESTING CONCERN</h4>
