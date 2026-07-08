@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 
 export default function HeroSection() {
@@ -34,7 +35,7 @@ export default function HeroSection() {
       isDark ? 'bg-gray-900' : 'bg-white'
     }`}>
       {/* Watermark Background */}
-      <div 
+      <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
           backgroundImage: 'url("/images/LOGO NEWWWWWWW.jpg")',
@@ -91,8 +92,8 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <a 
-                href="/about" 
+              <Link
+                to="/about"
                 className={`text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 shadow-lg ${
                   isDark
                     ? 'bg-yellow-500 hover:bg-yellow-600'
@@ -100,9 +101,9 @@ export default function HeroSection() {
                 }`}
               >
                 Read More
-              </a>
-              <a 
-                href="/contact" 
+              </Link>
+              <Link
+                to="/contact"
                 className={`px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 ${
                   isDark
                     ? 'border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-gray-900'
@@ -110,7 +111,7 @@ export default function HeroSection() {
                 }`}
               >
                 Get Started
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -152,7 +153,7 @@ export default function HeroSection() {
                     key={index}
                     onClick={() => setCurrentSlide(index)}
                     className={`h-3 rounded-full transition-all ${
-                      index === currentSlide ? 'bg-white w-8' : 'bg-white/50'
+                      index === currentSlide ? 'bg-white w-8' : 'bg-white/50 w-3'
                     }`}
                   />
                 ))}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, BookOpen, Download, Users, Globe } from 'lucide-react';
+import { X, BookOpen, Users, Globe } from 'lucide-react';
 import { factSheetsData } from '../../data/factSheetsData';
 
 interface FactSheetsModalProps {
@@ -30,7 +30,6 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
   if (!isOpen) return null;
 
   return (
-    // Overlay: pt-16 pushes content below the navbar (adjust if your navbar height differs)
     <div
       className="fixed inset-0 bg-black/70 z-50 overflow-y-auto pt-16"
       onClick={onClose}
@@ -40,7 +39,7 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
           className="bg-white dark:bg-gray-800 rounded-xl max-w-4xl mx-auto shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header — sticky just below the navbar */}
+          {/* Header */}
           <div className="sticky top-0 bg-gradient-to-r from-[#063FA1] to-[#052d7a] dark:from-gray-900 dark:to-gray-800 text-white p-4 rounded-t-xl z-10">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -143,25 +142,21 @@ export default function FactSheetsModal({ isOpen, onClose }: FactSheetsModalProp
                 {filteredItems.map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all group"
+                    className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all"
                   >
                     <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 min-w-[24px]">
                       {index + 1}.
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">
+                      <a
+                        href={item.file}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-[#063FA1] dark:text-yellow-400 hover:text-[#052d7a] dark:hover:text-yellow-300 hover:underline text-sm font-medium cursor-pointer transition-colors"
+                      >
                         {item.title}
-                      </p>
+                      </a>
                     </div>
-                    <a
-                      href={item.file}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 bg-[#063FA1] dark:bg-yellow-500 hover:bg-[#052d7a] dark:hover:bg-yellow-600 text-white dark:text-gray-900 px-3 py-1.5 rounded-lg transition-all hover:scale-105 opacity-0 group-hover:opacity-100"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span className="text-xs font-semibold">Open</span>
-                    </a>
                   </div>
                 ))}
               </div>

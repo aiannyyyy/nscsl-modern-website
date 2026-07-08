@@ -44,30 +44,21 @@ export default function BlogSection() {
         '/images/11.png'
       ],
       content: 'The newborn screening process typically involves collecting a small blood sample from the baby\'s heel, which is sent to a laboratory for testing. The process is quick and ensures comprehensive testing for various conditions.'
-    },
-    {
-      id: 3,
-      title: 'Success Stories',
-      description: 'Explore inspiring stories of families who benefited from early detection and treatment through newborn screening.',
-      image: '/images/impnbs.jpg',
-      content: 'These are photos of two children with Congenital Hypothyroidism. The boy, JR, was 14 years old when this photo was taken. At that time, he could not walk, talk, or sit independently, with a mental age estimated at just 1 month old. When he was brought to the hospital at 12 years of age for diagnosis, his fontanels were still open. Today, JR is 32 years old. The girl beside him is Janelle, who is now a 25-year-old engineer. The striking differences between their outcomes raise important questions: Why has JR\'s condition manifested so profoundly compared to Janelle\'s? What factors contributed to the differences in the management and outcomes of their conditions?'
     }
   ];
 
   const nextCarouselImage = () => {
-    if (selectedBlog?.carouselImages) {
-      setCurrentCarouselImage((prev) => 
-        (prev + 1) % selectedBlog.carouselImages!.length
-      );
-    }
+    if (!selectedBlog?.carouselImages || selectedBlog.carouselImages.length === 0) return;
+    setCurrentCarouselImage((prev) =>
+      (prev + 1) % selectedBlog.carouselImages!.length
+    );
   };
 
   const prevCarouselImage = () => {
-    if (selectedBlog?.carouselImages) {
-      setCurrentCarouselImage((prev) => 
-        (prev - 1 + selectedBlog.carouselImages!.length) % selectedBlog.carouselImages!.length
-      );
-    }
+    if (!selectedBlog?.carouselImages || selectedBlog.carouselImages.length === 0) return;
+    setCurrentCarouselImage((prev) =>
+      (prev - 1 + selectedBlog.carouselImages!.length) % selectedBlog.carouselImages!.length
+    );
   };
 
   return (
@@ -78,7 +69,7 @@ export default function BlogSection() {
           : 'bg-gray-50'
       }`}>
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {blogs.map((blog) => (
               <div 
                 key={blog.id}
@@ -139,7 +130,7 @@ export default function BlogSection() {
           onClick={() => setSelectedBlog(null)}
         >
           <div 
-            className={`rounded-xl max-w-2xl w-full transition-colors duration-300 flex flex-col ${
+            className={`rounded-xl max-w-4xl w-full max-h-[92vh] transition-colors duration-300 flex flex-col ${
               isDark
                 ? 'bg-gray-800'
                 : 'bg-white'
@@ -169,34 +160,50 @@ export default function BlogSection() {
                 ×
               </button>
             </div>
-            <div className="p-4 overflow-y-auto max-h-[calc(90vh-120px)]">
+            <div className="p-6 overflow-y-auto max-h-[calc(92vh-140px)]">
               {selectedBlog.isCarousel && selectedBlog.carouselImages ? (
                 <div className="relative mb-4">
-                  <img 
+                  <img
+                    key={currentCarouselImage}
                     src={selectedBlog.carouselImages[currentCarouselImage]}
                     alt={`Step ${currentCarouselImage + 1}`}
-                    className="w-full h-64 object-contain rounded-lg"
+                    className="w-full h-[28rem] object-contain rounded-lg"
                   />
                   <button
-                    onClick={prevCarouselImage}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevCarouselImage();
+                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+                    aria-label="Previous image"
                   >
-                    <i className="fas fa-chevron-left text-sm"></i>
+                    <i className="fas fa-chevron-left text-lg"></i>
                   </button>
                   <button
-                    onClick={nextCarouselImage}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextCarouselImage();
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
+                    aria-label="Next image"
                   >
-                    <i className="fas fa-chevron-right text-sm"></i>
+                    <i className="fas fa-chevron-right text-lg"></i>
                   </button>
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-2">
                     {selectedBlog.carouselImages.map((_, index) => (
                       <button
+                        type="button"
                         key={index}
-                        onClick={() => setCurrentCarouselImage(index)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentCarouselImage(index);
+                        }}
                         className={`h-1.5 rounded-full transition-all ${
                           index === currentCarouselImage ? 'bg-white w-4' : 'bg-white/50'
                         }`}
+                        aria-label={`Go to image ${index + 1}`}
                       />
                     ))}
                   </div>
@@ -205,7 +212,7 @@ export default function BlogSection() {
                 <img 
                   src={selectedBlog.image} 
                   alt={selectedBlog.title}
-                  className="w-full h-64 object-contain rounded-lg mb-4"
+                  className="w-full h-[28rem] object-contain rounded-lg mb-4"
                 />
               )}
               <p className={`text-sm leading-relaxed ${

@@ -26,7 +26,7 @@ export default function ResourcesHero() {
 
           <h1 className="text-4xl lg:text-6xl font-bold mb-4">Resources</h1>
           <p className="text-xl text-white/90 dark:text-gray-300 max-w-3xl mx-auto">
-            NSCSL Educational and Training Resource Materials
+            Educational and Training Resource Materials
           </p>
         </div>
       </div>

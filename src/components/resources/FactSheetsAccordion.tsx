@@ -38,9 +38,9 @@ export default function FactSheetsAccordion({ onViewAll }: FactSheetsAccordionPr
       >
         <div className="p-6 pt-0 space-y-4">
           {previewCategories.map((category) => {
-            const totalItems = 
-              category.categories.doctors.length + 
-              category.categories.parentsEnglish.length + 
+            const totalItems =
+              category.categories.doctors.length +
+              category.categories.parentsEnglish.length +
               category.categories.parentsFilipino.length;
 
             return (
@@ -58,18 +58,18 @@ export default function FactSheetsAccordion({ onViewAll }: FactSheetsAccordionPr
                     </p>
                   </div>
                   <span className="text-xs bg-[#063FA1] dark:bg-yellow-500 text-white dark:text-gray-900 px-3 py-1 rounded-full font-semibold">
-                    {totalItems} files
+                    {totalItems} total files
                   </span>
                 </div>
-                
+
                 {/* Show sample items */}
                 <div className="mt-3 space-y-2">
                   {category.categories.doctors.slice(0, 2).map((item, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-sm">
                       <ExternalLink className="w-3 h-3 text-gray-400" />
-                      <a 
-                        href={item.file} 
-                        target="_blank" 
+                      <a
+                        href={item.file}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-700 dark:text-gray-300 hover:text-[#063FA1] dark:hover:text-yellow-400 transition-colors"
                       >

@@ -82,6 +82,22 @@ export default function AboutTab() {
           isDark ? 'bg-gray-800' : 'bg-gray-100'
         }`}>
           <div className="grid md:grid-cols-2 gap-12">
+            {/* Vision */}
+            <div>
+              <h3 className={`text-2xl font-bold mb-6 ${
+                isDark ? 'text-yellow-400' : 'text-[#063FA1]'
+              }`}>
+                Our Vision
+              </h3>
+              <div className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <span className={`text-xl flex-shrink-0 ${isDark ? 'text-yellow-400' : 'text-[#063FA1]'}`}>
+                  ✓
+                </span>
+                <p className="text-justify">
+                  To be recognized as an institution providing quality Newborn Screening services and extensive coverage of live births across Southern Luzon.
+                </p>
+              </div>
+            </div>
             {/* Mission */}
             <div>
               <h3 className={`text-2xl font-bold mb-6 ${
@@ -115,23 +131,6 @@ export default function AboutTab() {
                   </span>
                 </li>
               </ul>
-            </div>
-
-            {/* Vision */}
-            <div>
-              <h3 className={`text-2xl font-bold mb-6 ${
-                isDark ? 'text-yellow-400' : 'text-[#063FA1]'
-              }`}>
-                Our Vision
-              </h3>
-              <div className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span className={`text-xl flex-shrink-0 ${isDark ? 'text-yellow-400' : 'text-[#063FA1]'}`}>
-                  ✓
-                </span>
-                <p className="text-justify">
-                  To be recognized as an institution providing quality Newborn Screening services and extensive coverage of live births across Southern Luzon.
-                </p>
-              </div>
             </div>
           </div>
         </div>

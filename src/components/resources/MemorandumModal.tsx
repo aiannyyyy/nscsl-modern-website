@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { X, FileText, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import { memorandumsData } from '../../data/memorandumsData';
 
 interface MemorandumModalProps {
@@ -63,8 +63,6 @@ export default function MemorandumModal({ isOpen, onClose }: MemorandumModalProp
               <X className="w-5 h-5" />
             </button>
           </div>
-
-          {/* Search Bar */}
           <input
             type="text"
             placeholder="Search memorandums..."
@@ -84,7 +82,6 @@ export default function MemorandumModal({ isOpen, onClose }: MemorandumModalProp
             >
               <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-300" />
             </button>
-
             <div className="flex-1 overflow-x-auto">
               <div className="flex gap-2">
                 {years.map((year) => (
@@ -102,7 +99,6 @@ export default function MemorandumModal({ isOpen, onClose }: MemorandumModalProp
                 ))}
               </div>
             </div>
-
             <button
               onClick={goToNextYear}
               disabled={!canGoNext}
@@ -127,7 +123,7 @@ export default function MemorandumModal({ isOpen, onClose }: MemorandumModalProp
               {filteredMemos.map((memo, index) => (
                 <div
                   key={memo.id}
-                  className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all group"
+                  className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all"
                 >
                   <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 min-w-[24px]">
                     {index + 1}.
@@ -136,24 +132,19 @@ export default function MemorandumModal({ isOpen, onClose }: MemorandumModalProp
                     <span className="inline-block bg-[#063FA1] dark:bg-yellow-500 text-white dark:text-gray-900 px-2 py-0.5 rounded text-xs font-semibold mb-1">
                       {memo.memoId}
                     </span>
-                    <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">
+                    <a
+                      href={memo.file}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-[#063FA1] dark:text-yellow-400 hover:text-[#052d7a] dark:hover:text-yellow-300 hover:underline text-sm font-medium cursor-pointer transition-colors"
+                    >
                       {memo.title}
-                    </p>
+                    </a>
                   </div>
-                  <a
-                    href={memo.file}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 bg-[#063FA1] dark:bg-yellow-500 hover:bg-[#052d7a] dark:hover:bg-yellow-600 text-white dark:text-gray-900 px-3 py-1.5 rounded-lg transition-all hover:scale-105 opacity-0 group-hover:opacity-100"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span className="text-xs font-semibold">Open</span>
-                  </a>
                 </div>
               ))}
             </div>
           )}
-
           <div className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
             Showing {filteredMemos.length} memorandum{filteredMemos.length !== 1 ? 's' : ''} for {selectedYear}
           </div>

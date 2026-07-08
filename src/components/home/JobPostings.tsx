@@ -31,7 +31,6 @@ export default function JobPostings() {
               We currently have no job openings available. 
               Please check back later for updates.
             </p>
-            <div className="text-4xl mb-6">👀</div>
             <img 
               src="/images/LOGO NEWWWWWWW.jpg" 
               alt="NSCSL Logo" 
